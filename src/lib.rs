@@ -18,5 +18,7 @@ pub mod config;
 pub mod event;
 mod generator;
 mod utils;
+mod binary_writer;
 
 pub use self::generator::EventGenerator;
+pub use self::binary_writer::{BinaryWriter, BinaryBid};

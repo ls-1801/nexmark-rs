@@ -40,7 +40,7 @@ pub enum EventType {
 }
 
 /// The Nexmark Event, including [`Person`], [`Auction`], and [`Bid`].
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum Event {
     /// The Person event.
@@ -159,7 +159,7 @@ impl Person {
 }
 
 /// Auction represents an item under auction.
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Auction {
     /// An auction-unique integer ID.
@@ -169,9 +169,9 @@ pub struct Auction {
     /// A short description of the item.
     pub description: String,
     /// The initial bid price in cents.
-    pub initial_bid: usize,
+    pub initial_bid: f64,
     /// The minimum price for the auction to succeed.
-    pub reserve: usize,
+    pub reserve: f64,
     /// A millisecond timestamp for the event origin.
     pub date_time: u64,
     /// A UNIX epoch timestamp for the expiration date of the auction.
@@ -271,22 +271,26 @@ impl Auction {
 }
 
 /// Bid represents a bid for an item under auction.
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Bid {
+    pub timestamp: usize,
     /// The ID of the auction this bid is for.
     pub auction: Id,
     /// The ID of the person that placed this bid.
     pub bidder: Id,
-    /// The price in cents that the person bid for.
-    pub price: usize,
     /// The channel of this bid
+    #[serde(skip)]
     pub channel: String,
     /// The url of this bid
+    #[serde(skip)]
     pub url: String,
     /// A millisecond timestamp for the event origin.
     pub date_time: u64,
+    /// The price in cents that the person bid for.
+    pub price: f64,
     /// Extra information
+    #[serde(skip)]
     pub extra: String,
 }
 
@@ -324,6 +328,7 @@ impl Bid {
         let extra = rng.gen_next_extra(current_size, nex.avg_bid_byte_size);
 
         Bid {
+            timestamp: event_id,
             auction: auction + nex.first_auction_id,
             bidder: bidder + nex.first_person_id,
             price,

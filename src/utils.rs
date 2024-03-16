@@ -22,7 +22,7 @@ pub trait NexmarkRng {
     fn gen_string_with_delimiter(&mut self, max: usize, delimiter: char) -> String;
     fn gen_exact_string(&mut self, length: usize) -> String;
     fn gen_next_extra(&mut self, current_size: usize, desired_average_size: usize) -> String;
-    fn gen_price(&mut self) -> usize;
+    fn gen_price(&mut self) -> f64;
 }
 
 impl NexmarkRng for SmallRng {
@@ -65,8 +65,8 @@ impl NexmarkRng for SmallRng {
         self.gen_exact_string(desired_size)
     }
 
-    fn gen_price(&mut self) -> usize {
-        (10.0_f32.powf((*self).gen::<f32>() * 6.0) * 100.0).round() as usize
+    fn gen_price(&mut self) -> f64 {
+        (10.0_f64.powf((*self).gen::<f64>() * 6.0) * 100.0).round()
     }
 }
 

@@ -18,6 +18,9 @@ lazy_static = "1.4"
 rand = { version = "0.8", features = ["small_rng"] }
 serde = { version = "1", features = ["derive"], optional = true }
 serde_json = { version = "1", optional = true }
+csv = "1.3.0"
+byteorder = "1.5.0"
+bytemuck = { version = "1.15.0" , features = ["derive"]}
 
 [dev-dependencies]
 criterion = "0.4"
