@@ -143,10 +143,7 @@ impl Default for NexmarkConfig {
             first_category_id: 10,
             person_id_lead: 10,
             sine_approx_steps: 10,
-            base_time: SystemTime::now()
-                .duration_since(SystemTime::UNIX_EPOCH)
-                .unwrap()
-                .as_millis() as u64,
+            base_time: 73u64,
             us_states: split_str("az,ca,id,or,wa,wy"),
             us_cities: split_str("phoenix,los angeles,san francisco,boise,portland,bend,redmond,seattle,kent,cheyenne"),
             hot_channels: split_str("Google,Facebook,Baidu,Apple"),
